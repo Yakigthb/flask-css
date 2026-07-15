@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <title>ф</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+
+<header class="header">
+    <div class="container">
+        <div class="logo">
+            ф
+        </div>
+    </div>
+</header>
+
+
+<main>
+<div class="container">
+
+<h1>Список товаров</h1>
+
+<a class="btn" href="/add">
+    Добавить товар
+</a>
+
+
+{% for product in products %}
+
+<div class="product-card">
+
+<h2>{{ product.name }}</h2>
+
+<p>Тип: {{ product.type }}</p>
+
+<p>Цена: {{ product.price }} грн</p>
+
+
+<a class="btn" href="/edit/{{ product.id }}">
+редактировать
+</a>
+
+
+<a class="delete" href="/delete/{{ product.id }}">
+удалить
+</a>
+
+</div>
+
+
+{% else %}
+
+<p>Товаров нет</p>
+
+{% endfor %}
+
+
+</div>
+</main>
+
+
+</body>
+</html>
