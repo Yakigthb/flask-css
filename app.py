@@ -54,7 +54,7 @@ def edit(name):
     product = get_product_by_name(name)
 
     if product is None:
-        return "товар не найдено", 404
+        return "товар не найден", 404
 
     if request.method == "POST":
         new_name = request.form["name"]
@@ -76,7 +76,7 @@ def delete(name):
     product = get_product_by_name(name)
 
     if product is None:
-        return "товар не найдено", 404
+        return "товар не найден", 404
 
     delete_product(name)
 
