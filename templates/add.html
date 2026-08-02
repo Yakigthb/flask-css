@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Додати товар</title>
+    <title>добавить товар</title>
     <link rel="stylesheet" href="/css/style.css">
 </head>
 
@@ -14,7 +14,7 @@
         <div class="logo">
             <a href="{{ url_for('index') }}">ProductManager</a>
         </div>
-        <a class="back" href="{{ url_for('index') }}">← Назад</a>
+        <a class="back" href="{{ url_for('index') }}">назад</a>
     </div>
 </header>
 
@@ -22,26 +22,26 @@
     <div class="container">
         <div class="form-card">
             <p class="subtitle">ProductManager</p>
-            <h1>Додати товар</h1>
+            <h1>Добавить товар</h1>
 
             <form method="POST">
 
                 <div class="form-group">
-                    <label for="name">Назва товару</label>
+                    <label for="name">Название товара</label>
                     <input type="text" id="name" name="name" required>
                 </div>
 
                 <div class="form-group">
-                    <label for="type">Тип товару</label>
+                    <label for="type">Тип товара</label>
                     <input type="text" id="type" name="type" required>
                 </div>
 
                 <div class="form-group">
-                    <label for="price">Ціна</label>
+                    <label for="price">Цена</label>
                     <input type="number" id="price" name="price" required>
                 </div>
 
-                <button class="btn wide" type="submit">Додати товар</button>
+                <button class="btn wide" type="submit">Добавить товар</button>
 
             </form>
         </div>

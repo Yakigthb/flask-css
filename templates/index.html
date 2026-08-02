@@ -14,7 +14,7 @@
         <div class="logo">
             <a href="{{ url_for('index') }}">ProductManager</a>
         </div>
-        <a class="btn" href="{{ url_for('add') }}">+ Додати товар</a>
+        <a class="btn" href="{{ url_for('add') }}">добавить товар</a>
     </div>
 </header>
 
@@ -23,8 +23,8 @@
 
         <div class="page-title">
             <div>
-                <p class="subtitle">Керування товарами</p>
-                <h1>Список товарів</h1>
+                <p class="subtitle">управление товарами</p>
+                <h1>Список товаров</h1>
             </div>
         </div>
 
@@ -49,8 +49,8 @@
             </div>
             {% else %}
             <div class="empty">
-                <h2>Товарів поки немає</h2>
-                <p>Додайте перший товар.</p>
+                <h2>Товаров пока что нету</h2>
+                <p>Добавьтепервый товар</p>
             </div>
             {% endfor %}
         </div>
