@@ -1,40 +1,26 @@
 from flask import Flask, render_template, request, redirect, url_for, send_from_directory
-import json
 import os
+
+from action_db import (
+    load_products,
+    save_products,
+    get_product_by_name,
+    delete_product,
+    update_product
+)
 
 
 app = Flask(__name__)
 
 
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-PRODUCTS_FILE = os.path.join(BASE_DIR, "products.json")
 
-
-# подключение папки css
 @app.route('/css/<path:filename>')
 def css(filename):
     return send_from_directory('css', filename)
 
 
-def load_products():
-    if not os.path.exists(PRODUCTS_FILE):
-        with open(PRODUCTS_FILE, "w", encoding="utf-8") as file:
-            json.dump([], file)
-
-    with open(PRODUCTS_FILE, "r", encoding="utf-8") as file:
-        return json.load(file)
-
-
-
-def save_products(products):
-    with open(PRODUCTS_FILE, "w", encoding="utf-8") as file:
-        json.dump(products, file, ensure_ascii=False, indent=4)
-
-
-
 @app.route("/")
 def index():
-
     products = load_products()
 
     return render_template(
@@ -43,12 +29,9 @@ def index():
     )
 
 
-
 @app.route("/add", methods=["GET", "POST"])
 def add():
-
     if request.method == "POST":
-
         products = load_products()
 
         product = {
@@ -59,41 +42,28 @@ def add():
         }
 
         products.append(product)
-
         save_products(products)
 
         return redirect(url_for("index"))
-
 
     return render_template("add.html")
 
 
-
-@app.route("/edit/<int:id>", methods=["GET", "POST"])
-def edit(id):
-
-    products = load_products()
-
-    product = next(
-        (p for p in products if p["id"] == id),
-        None
-    )
-
+@app.route("/edit/<path:name>", methods=["GET", "POST"])
+def edit(name):
+    product = get_product_by_name(name)
 
     if product is None:
-        return "Товар не знайдено"
-
+        return "товар не найдено", 404
 
     if request.method == "POST":
+        new_name = request.form["name"]
+        product_type = request.form["type"]
+        price = request.form["price"]
 
-        product["name"] = request.form["name"]
-        product["type"] = request.form["type"]
-        product["price"] = request.form["price"]
-
-        save_products(products)
+        update_product(name, new_name, product_type, price)
 
         return redirect(url_for("index"))
-
 
     return render_template(
         "edit.html",
@@ -101,21 +71,16 @@ def edit(id):
     )
 
 
+@app.route("/delete/<path:name>")
+def delete(name):
+    product = get_product_by_name(name)
 
-@app.route("/delete/<int:id>")
-def delete(id):
+    if product is None:
+        return "товар не найдено", 404
 
-    products = load_products()
-
-    products = [
-        p for p in products
-        if p["id"] != id
-    ]
-
-    save_products(products)
+    delete_product(name)
 
     return redirect(url_for("index"))
-
 
 
 if __name__ == "__main__":

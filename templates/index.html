@@ -2,64 +2,61 @@
 <html lang="uk">
 <head>
     <meta charset="UTF-8">
-    <title>ф</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ProductManager</title>
     <link rel="stylesheet" href="/css/style.css">
 </head>
 
 <body>
 
 <header class="header">
-    <div class="container">
+    <div class="container header-inner">
         <div class="logo">
-            ф
+            <a href="{{ url_for('index') }}">ProductManager</a>
         </div>
+        <a class="btn" href="{{ url_for('add') }}">+ Додати товар</a>
     </div>
 </header>
 
-
 <main>
-<div class="container">
+    <div class="container">
 
-<h1>Список товаров</h1>
+        <div class="page-title">
+            <div>
+                <p class="subtitle">Керування товарами</p>
+                <h1>Список товарів</h1>
+            </div>
+        </div>
 
-<a class="btn" href="/add">
-    Добавить товар
-</a>
+        <div class="products">
+            {% for product in products %}
+            <div class="product-card">
+                <div>
+                    <h2>{{ product.name }}</h2>
+                    <p class="type">{{ product.type }}</p>
+                    <p class="price">{{ product.price }} грн</p>
+                </div>
 
+                <div class="actions">
+                    <a class="btn secondary" href="{{ url_for('edit', name=product.name) }}">
+                        Редагувати
+                    </a>
 
-{% for product in products %}
+                    <a class="btn delete" href="{{ url_for('delete', name=product.name) }}">
+                        Видалити
+                    </a>
+                </div>
+            </div>
+            {% else %}
+            <div class="empty">
+                <h2>Товарів поки немає</h2>
+                <p>Додайте перший товар.</p>
+            </div>
+            {% endfor %}
+        </div>
 
-<div class="product-card">
-
-<h2>{{ product.name }}</h2>
-
-<p>Тип: {{ product.type }}</p>
-
-<p>Цена: {{ product.price }} грн</p>
-
-
-<a class="btn" href="/edit/{{ product.id }}">
-редактировать
-</a>
-
-
-<a class="delete" href="/delete/{{ product.id }}">
-удалить
-</a>
-
-</div>
-
-
-{% else %}
-
-<p>Товаров нет</p>
-
-{% endfor %}
-
-
-</div>
+    </div>
 </main>
-
 
 </body>
 </html>
