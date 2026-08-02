@@ -17,8 +17,6 @@ app = Flask(__name__)
 @app.route('/css/<path:filename>')
 def css(filename):
     return send_from_directory('css', filename)
-
-
 @app.route("/")
 def index():
     products = load_products()
